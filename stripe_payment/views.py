@@ -31,6 +31,9 @@ class CheckoutSessionCreatingView(View):
                     'quantity': 1,
                 },
             ],
+            metadata={
+                'product_id': product.id
+            },
             mode='payment',
             success_url=os.path.join(settings.DOMAIN, '/success/'),
             cancel_url=os.path.join(settings.DOMAIN, '/cancel/'),
