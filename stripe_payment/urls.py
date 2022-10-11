@@ -4,7 +4,7 @@ from stripe_payment.views import (
     CheckoutSessionCreatingView,
     ProductLandingPageView,
     CancelView,
-    SuccessView
+    SuccessView,
 )
 
 
