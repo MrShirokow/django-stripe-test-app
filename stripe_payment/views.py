@@ -1,4 +1,3 @@
-import os
 import stripe
 
 from django.http import JsonResponse
@@ -35,8 +34,8 @@ class CheckoutSessionCreatingView(View):
                 'product_id': product.id
             },
             mode='payment',
-            success_url=os.path.join(settings.DOMAIN, '/success/'),
-            cancel_url=os.path.join(settings.DOMAIN, '/cancel/'),
+            success_url=f'{settings.DOMAIN}/success/',
+            cancel_url=f'{settings.DOMAIN}/cancel/',
         )
         return JsonResponse({'id': checkout_session.id})
 
