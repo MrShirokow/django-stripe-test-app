@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Products</title>
+        <title>Items</title>
         <link rel="stylesheet" href="style.css">
         <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
         <script src="https://js.stripe.com/v3/"></script>
     </head>
     <body>
         <section>
-            <div class="products">
-                {% for item in products %}
+            <div class="items">
+                {% for item in items %}
                 <tr>
                     <td>
                         <h3>{{ item.name }}</h3>

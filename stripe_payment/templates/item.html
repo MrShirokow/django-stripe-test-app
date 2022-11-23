@@ -8,11 +8,11 @@
     </head>
     <body>
         <section>
-            <div class="product">
+            <div class="item">
                 <div class="description">
-                    <h3>{{ product.name }}</h3>
-                    <p>{{ product.description }}</p>
-                    <p>${{ product.display_price }}</p>
+                    <h3>{{ item.name }}</h3>
+                    <p>{{ item.description }}</p>
+                    <p>${{ item.display_price }}</p>
                 </div>
             </div>
             <button type="button" id="checkout-button">Buy</button>
@@ -24,7 +24,7 @@
     var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
     var checkoutButton = document.getElementById("checkout-button");
     checkoutButton.addEventListener("click", function () {
-        fetch("{% url 'buy-item' product.id %}", {
+        fetch("{% url 'buy-item' item.id %}", {
             method: "POST",
             headers: {
             'X-CSRFToken': csrftoken
