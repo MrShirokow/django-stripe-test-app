@@ -15,7 +15,7 @@
                     <p>${{ product.display_price }}</p>
                 </div>
             </div>
-            <button type="button" id="checkout-button">Pay</button>
+            <button type="button" id="checkout-button">Buy</button>
         </section>
         {% csrf_token %}
     </body>
@@ -24,7 +24,7 @@
     var stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
     var checkoutButton = document.getElementById("checkout-button");
     checkoutButton.addEventListener("click", function () {
-        fetch("{% url 'create-checkout-session' product.id %}", {
+        fetch("{% url 'buy-item' product.id %}", {
             method: "POST",
             headers: {
             'X-CSRFToken': csrftoken

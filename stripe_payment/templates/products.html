@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Products</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+        <script src="https://js.stripe.com/v3/"></script>
+    </head>
+    <body>
+        <section>
+            <div class="products">
+                {% for item in products %}
+                <tr>
+                    <td>
+                        <h3>{{ item.name }}</h3>
+                        <p>{{ item.description }}</p>
+                        <p>${{ item.display_price }}</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </div>
+        </section>
