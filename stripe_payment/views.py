@@ -1,8 +1,8 @@
 import stripe
 
-from django.http import JsonResponse
 from django.views import View
 from django.conf import settings
+from django.http import JsonResponse
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404
 
@@ -41,7 +41,7 @@ class CheckoutSessionCreatingView(View):
 
 
 class ProductLandingPageView(TemplateView):
-    template_name = 'landing.html'
+    template_name = 'item.html'
 
     def get_context_data(self, **kwargs):
         product_id = self.kwargs['pk']
@@ -49,6 +49,19 @@ class ProductLandingPageView(TemplateView):
         context = super(ProductLandingPageView, self).get_context_data(**kwargs)
         context.update({
             'product': product,
+            'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY
+        })
+        return context
+
+
+class ProductsLandingPageView(TemplateView):
+    template_name = 'products.html'
+
+    def get_context_data(self):
+        products = Product.objects.all()
+        context = super(ProductsLandingPageView, self).get_context_data()
+        context.update({
+            'products': products,
             'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY
         })
         return context
