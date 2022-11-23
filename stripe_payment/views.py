@@ -40,7 +40,7 @@ class OrderLandingPageView(TemplateView):
         context = super(OrderLandingPageView, self).get_context_data(**kwargs)
         context.update({
             'order_id': order_id,
-            'cost': order.cost,
+            'cost': order.display_cost,
             'items': order.items.all(),
             'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY
         })
@@ -89,7 +89,8 @@ class CheckoutSessionCreatingView(View):
 
 def create_order(request):
     items = Item.objects.filter(id__in=request.POST.getlist('item')).all()
-    order = Order.objects.create(cost=items.aggregate(Sum('price'))['price__sum'])
-    order.items.set(items)
-    order.save()
+    order = Order.objects.create(
+        cost=items.aggregate(Sum('price'))['price__sum']
+    )
+    order.items.add(*items)
     return HttpResponseRedirect(reverse('order-page', kwargs={'pk': order.id}))
