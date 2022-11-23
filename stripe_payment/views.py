@@ -4,6 +4,7 @@ import stripe
 from django.urls import reverse
 from django.views import View
 from django.conf import settings
+from django.db.models import Sum
 from django.core.mail import send_mail
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404
@@ -38,6 +39,8 @@ class OrderLandingPageView(TemplateView):
         order = get_object_or_404(Order, pk=order_id)
         context = super(OrderLandingPageView, self).get_context_data(**kwargs)
         context.update({
+            'order_id': order_id,
+            'cost': order.cost,
             'items': order.items.all(),
             'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY
         })
@@ -58,24 +61,24 @@ class ItemsLandingPageView(TemplateView):
 
 class CheckoutSessionCreatingView(View):
     def post(self, request, *args, **kwargs):
-        item_id = self.kwargs['pk']
-        item = get_object_or_404(Item, pk=item_id)
+        order_id = self.kwargs['pk']
+        order = get_object_or_404(Order, pk=order_id)
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[
                 {
                     'price_data': {
                         'currency': 'usd',
-                        'unit_amount': item.price,
+                        'unit_amount': order.cost,
                         'product_data': {
-                            'name': item.name,
+                            'name': 'your order',
                         },
                     },
                     'quantity': 1,
                 },
             ],
             metadata={
-                'item_id': item.id
+                'order_id': order.id
             },
             mode='payment',
             success_url=f'{settings.DOMAIN}/success/',
@@ -86,7 +89,7 @@ class CheckoutSessionCreatingView(View):
 
 def create_order(request):
     items = Item.objects.filter(id__in=request.POST.getlist('item')).all()
-    order = Order.objects.create()
+    order = Order.objects.create(cost=items.aggregate(Sum('price'))['price__sum'])
     order.items.set(items)
     order.save()
     return HttpResponseRedirect(reverse('order-page', kwargs={'pk': order.id}))

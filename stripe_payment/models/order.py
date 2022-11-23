@@ -8,7 +8,7 @@ class Order(models.Model):
     items = models.ManyToManyField(Item)
 
     @property
-    def display_price(self):
+    def display_cost(self):
         return f'{self.cost / 100:.2f}'
 
     class Meta:

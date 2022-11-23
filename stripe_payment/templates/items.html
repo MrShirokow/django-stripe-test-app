@@ -13,14 +13,16 @@
                     {% csrf_token %}
                     <ul id='itemList'>  
                     {% for item in items %}
-                    <input type="checkbox" name="item" value="{{ item.id }}">
+                    <div>
                         <h3>{{ item.name }}</h3>
                         <p>{{ item.description }}</p>
-                        <p>${{ item.display_price }}</p>  
-                    </input>
+                        <p>${{ item.display_price }}</p>
+                        <input type="checkbox" name="item" value="{{ item.id }}">
+                        <br></br>
+                    </div>
                     {% endfor %}
-                    </ul>
                     <button type="submit">Go to order</button>
+                    </ul>
                 </form>
             </div>
         </section>

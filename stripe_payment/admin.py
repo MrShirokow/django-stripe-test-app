@@ -12,5 +12,5 @@ class ItemAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', )
+    list_display = ('id', 'display_cost')
     list_display_links = list_display
