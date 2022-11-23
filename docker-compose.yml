@@ -1,0 +1,27 @@
+version: "3.7"
+
+services:
+  db:
+    restart: always
+    image: postgres:12.11-alpine
+    container_name: stripe_db
+    volumes:
+      - stripe_db_volume:/var/lib/postgresql/data
+    env_file: ./.env
+  app:
+    restart: always
+    container_name: stripe_app
+    volumes:
+      - stripe_static_volume:/app/static
+      - stripe_media_volume:/app/media
+    build: .
+    command: bash -c "python manage.py migrate & python manage.py runserver"
+    env_file: ./.env
+    ports:
+      - ${PORT}:8000
+    depends_on:
+      - db
+volumes:
+  stripe_db_volume:
+  stripe_static_volume:
+  stripe_media_volume:

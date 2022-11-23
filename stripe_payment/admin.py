@@ -6,7 +6,7 @@ from stripe_payment.models.order import Order
 
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'description', 'price')
+    list_display = ('id', 'name', 'description', 'display_price')
     list_display_links = list_display
 
 

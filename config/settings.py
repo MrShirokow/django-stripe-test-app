@@ -26,6 +26,7 @@ env = environ.Env(
     POSTGRES_PORT=(str, ''),
     SECRET_KEY=(str, ''),
     DEBUG=(bool, False),
+    DOMAIN=(str, ''),
 )
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
@@ -37,7 +38,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG', default=False)
 
 ALLOWED_HOSTS = []
-DOMAIN = "http://127.0.0.1:8000"
+DOMAIN = env('DOMAIN')
 
 # Application definition
 
