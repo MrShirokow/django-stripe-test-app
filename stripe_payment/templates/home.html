@@ -20,7 +20,7 @@
                         <th>Product</th>
                         <th style="text-align: center">Description</th>
                         <th>Price</th>
-                        <th>&nbsp;</th>
+                        <th>Quantity</th>
                     </thead>
                     <tbody>
                         {% for item in items %}
@@ -38,6 +38,9 @@
                             </td>
                             <td>
                                 <div class="fw-600">${{ item.display_price }}</div>
+                            </td>
+                            <td>
+                                <input class="input" min="1" value=1 type="number" name="quantity">
                             </td>
                         </tr>
                         {% endfor %}

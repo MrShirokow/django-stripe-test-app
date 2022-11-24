@@ -19,23 +19,26 @@
                     <th>&nbsp;</th>
                     <th>Product</th>
                     <th style="text-align: center">Description</th>
-                    <th>Price</th>
-                    <th>&nbsp;</th>
+                    <th>Cost</th>
+                    <th>Quantity</th>
                 </thead>
                 <tbody>
-                    {% for item in items %}
+                    {% for order_item in order_items %}
                     <tr class="align-middle alert border-bottom">
                         <td></td>
                         <td>
-                            <p class="m-0 fw-bold">{{ item.name }}</p>
+                            <p class="m-0 fw-bold">{{ order_item.item.name }}</p>
                         </td>
                         <td>
                             <div>
-                                <p class="m-0 text-muted">{{ item.description }}</p>
+                                <p class="m-0 text-muted">{{ order_item.item.description }}</p>
                             </div>
                         </td>
                         <td>
-                            <div class="fw-600">${{ item.display_price }}</div>
+                            <div class="fw-600">${{ order_item.display_cost }}</div>
+                        </td>
+                        <td>
+                            <div class="input">{{ order_item.quantity }}</div>
                         </td>
                     </tr>
                     {% endfor %}

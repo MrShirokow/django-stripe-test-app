@@ -1,9 +1,9 @@
 import stripe
 
+from itertools import islice
 from django.urls import reverse
 from django.views import View
 from django.conf import settings
-from django.db.models import Sum
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404
 from django.http import (
@@ -14,6 +14,7 @@ from django.http import (
 
 from stripe_payment.models.item import Item
 from stripe_payment.models.order import Order
+from stripe_payment.models.order_item import OrderItem
 
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -46,7 +47,7 @@ class OrderPageView(TemplateView):
         context.update({
             'order_id': order_id,
             'cost': order.display_cost,
-            'items': order.items.all(),
+            'order_items': order.order_items.all(),
             'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY,
         })
         return context
@@ -80,13 +81,17 @@ class CheckoutSessionCreatingView(View):
                 {
                     'price_data': {
                         'currency': 'usd',
-                        'unit_amount': order.cost,
+                        'unit_amount': order_item['item__price'],
                         'product_data': {
-                            'name': 'Total cost',
+                            'name': order_item['item__name'],
                         },
                     },
-                    'quantity': 1,
-                },
+                    'quantity': order_item['quantity'],
+                } for order_item in order.order_items.values(
+                    'quantity', 
+                    'item__price', 
+                    'item__name',
+                )
             ],
             metadata={
                 'order_id': order.id,
@@ -99,12 +104,24 @@ class CheckoutSessionCreatingView(View):
 
 
 def create_order(request) -> HttpResponse:
-    ids = request.POST.getlist('item')
-    if not ids:
+    items = request.POST.getlist('item')
+    quantities = request.POST.getlist('quantity')
+    if not items:
         return HttpResponseRedirect(reverse('cancel-pay'))
-    items = Item.objects.filter(id__in=request.POST.getlist('item')).all()
-    order = Order.objects.create(
-        cost=items.aggregate(Sum('price'))['price__sum'],
+    creation_data = list(zip(items, quantities))
+    order = Order.objects.create()
+    batch_size = 100
+    item_iterator = (
+        OrderItem(
+            order_id=order.id,
+            item_id=item_id,
+            quantity=quantity,
+        ) 
+        for item_id, quantity in creation_data
     )
-    order.items.add(*items)
+    while True:
+        batch = list(islice(item_iterator, batch_size))
+        if not batch:
+            break
+        OrderItem.objects.bulk_create(batch, batch_size)
     return HttpResponseRedirect(reverse('order-page', kwargs={'pk': order.id}))
