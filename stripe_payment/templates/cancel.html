@@ -1,17 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+
+</html>
+
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <title>Checkout canceled</title>
 </head>
 
 <body>
-    <section>
-        <p>
-            Forgot to add something to your order? 
+    <div class="card-body">
+        <div class="wrapper text-center">
+            <h4 class="card-title">Forgot to add something to your order? </h4>
             <form action="{% url 'home-page' %}">
-                <button type="submit">Back to products</button>
+                <button class="btn btn-outline-success" type="submit">Back to products</button>
             </form>
-        </p>
-    </section>
+        </div>
+    </div>
 </body>
+
 </html>

@@ -1,19 +1,24 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+
+</html>
 
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <title>Thanks for your order!</title>
 </head>
 
 <body>
-    <section>
-        <p>
-            Your order has been paid successfully. To make a new order, click on the button:
-        </p>
-        <form action="{% url 'home-page' %}">
-            <button type="submit">Back to products</button>
-        </form>
-    </section>
+    <div class="card-body">
+        <div class="wrapper text-center">
+            <h4 class="card-title">Thanks for your order!</h4>
+            <p class="card-description">The payment was successful. You can return to the product page and create a new order.</p>
+            <form action="{% url 'home-page' %}">
+                <button class="btn btn-outline-success" type="submit">Back to products</button>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>
