@@ -1,14 +1,11 @@
-import json
 import stripe
 
 from django.urls import reverse
 from django.views import View
 from django.conf import settings
 from django.db.models import Sum
-from django.core.mail import send_mail
 from django.views.generic import TemplateView
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
 from django.http import (
     JsonResponse, 
     HttpResponse,
@@ -36,7 +33,7 @@ class CancelView(TemplateView):
     template_name = "cancel.html"
 
 
-class OrderLandingPageView(TemplateView):
+class OrderPageView(TemplateView):
     '''
     View for page with order items
     '''
@@ -45,7 +42,7 @@ class OrderLandingPageView(TemplateView):
     def get_context_data(self, **kwargs) -> dict:
         order_id = self.kwargs['pk']
         order = get_object_or_404(Order, pk=order_id)
-        context = super(OrderLandingPageView, self).get_context_data(**kwargs)
+        context = super(OrderPageView, self).get_context_data(**kwargs)
         context.update({
             'order_id': order_id,
             'cost': order.display_cost,
@@ -55,7 +52,7 @@ class OrderLandingPageView(TemplateView):
         return context
 
 
-class HomeLandingPageView(TemplateView):
+class HomePageView(TemplateView):
     '''
     View for main page with product items
     '''
@@ -63,7 +60,7 @@ class HomeLandingPageView(TemplateView):
 
     def get_context_data(self, **kwargs) -> dict:
         items = Item.objects.all()
-        context = super(HomeLandingPageView, self).get_context_data(**kwargs)
+        context = super(HomePageView, self).get_context_data(**kwargs)
         context.update({
             'items': items,
         })
@@ -102,6 +99,9 @@ class CheckoutSessionCreatingView(View):
 
 
 def create_order(request) -> HttpResponse:
+    ids = request.POST.getlist('item')
+    if not ids:
+        return HttpResponseRedirect(reverse('cancel-pay'))
     items = Item.objects.filter(id__in=request.POST.getlist('item')).all()
     order = Order.objects.create(
         cost=items.aggregate(Sum('price'))['price__sum'],
