@@ -55,15 +55,15 @@ class OrderLandingPageView(TemplateView):
         return context
 
 
-class ItemsLandingPageView(TemplateView):
+class HomeLandingPageView(TemplateView):
     '''
     View for main page with product items
     '''
-    template_name = 'items.html'
+    template_name = 'home.html'
 
     def get_context_data(self, **kwargs) -> dict:
         items = Item.objects.all()
-        context = super(ItemsLandingPageView, self).get_context_data(**kwargs)
+        context = super(HomeLandingPageView, self).get_context_data(**kwargs)
         context.update({
             'items': items,
         })

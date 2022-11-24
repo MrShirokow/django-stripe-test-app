@@ -4,7 +4,7 @@ from stripe_payment.views import (
     CheckoutSessionCreatingView,
     OrderLandingPageView,
     # ItemLandingPageView,
-    ItemsLandingPageView,
+    HomeLandingPageView,
     CancelView,
     SuccessView,
     create_order,
@@ -12,7 +12,7 @@ from stripe_payment.views import (
 
 
 urlpatterns = [
-    path('', ItemsLandingPageView.as_view(), name='items-page'),
+    path('', HomeLandingPageView.as_view(), name='home-page'),
     re_path(r'^order/create/?$', create_order, name='create-order'),
     re_path(r'^order/(?P<pk>[0-9]*)/?$', OrderLandingPageView.as_view(), name='order-page'),
     re_path(r'^order/(?P<pk>[0-9]*)/buy/?$', CheckoutSessionCreatingView.as_view(), name='buy-items'),
