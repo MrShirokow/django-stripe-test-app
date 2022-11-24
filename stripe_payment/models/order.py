@@ -1,15 +1,15 @@
 from django.db import models
 
-from .item import Item
-
 
 class Order(models.Model):
-    cost = models.IntegerField(default=0)
-    items = models.ManyToManyField(Item)
+
+    @property
+    def total_cost(self):
+        return sum([item.total_cost for item in self.order_items.all()])
 
     @property
     def display_cost(self):
-        return f'{self.cost / 100:.2f}'
+        return f'{self.total_cost / 100:.2f}'
 
     class Meta:
         verbose_name = 'order'
@@ -18,4 +18,4 @@ class Order(models.Model):
         app_label = 'stripe_payment'
 
     def __str__(self) -> str:
-        return f'Order #{self.id}: ${self.display_cost}'
+        return f'Order #{self.id}: {self.display_cost}'

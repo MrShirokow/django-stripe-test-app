@@ -11,10 +11,10 @@ class Item(models.Model):
         return f'{self.price / 100:.2f}'
 
     class Meta:
-        verbose_name = 'product'
-        verbose_name_plural = 'products'
+        verbose_name = 'item'
+        verbose_name_plural = 'items'
         ordering = ['id']
         app_label = 'stripe_payment'
 
     def __str__(self) -> str:
-        return f'Item: {self.name}: {self.price}'
+        return f'Item: {self.name}: {self.display_price}'
