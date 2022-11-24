@@ -16,6 +16,5 @@ class Item(models.Model):
         ordering = ['id']
         app_label = 'stripe_payment'
 
-    def __str__(self):
-        return f'{self.name}: {self.price}'
-
+    def __str__(self) -> str:
+        return f'Item: {self.name}: {self.price}'

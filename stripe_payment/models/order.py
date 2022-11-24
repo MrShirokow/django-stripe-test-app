@@ -16,3 +16,6 @@ class Order(models.Model):
         verbose_name_plural = 'orders'
         ordering = ['id']
         app_label = 'stripe_payment'
+
+    def __str__(self) -> str:
+        return f'Order #{self.id}: ${self.display_cost}'

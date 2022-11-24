@@ -15,7 +15,6 @@ from django.http import (
     HttpResponseRedirect,
 )
 
-
 from stripe_payment.models.item import Item
 from stripe_payment.models.order import Order
 
