@@ -91,9 +91,13 @@
     padding: 2rem 0.5rem;
 }
 
+.input::-webkit-inner-spin-button {
+    opacity: 1;
+}
+
 .input {
     width: 60px;
-    height: 30px;
+    height: 40px;
     color: black;
     font-weight: 600;
     outline: none;
