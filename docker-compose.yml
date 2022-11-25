@@ -12,10 +12,10 @@ services:
     restart: always
     container_name: stripe_app
     volumes:
-      - stripe_static_volume:/app/static
-      - stripe_media_volume:/app/media
+      - stripe_static_volume:/app/stripe_payment/static
+      - stripe_media_volume:/app/stripe_payment/media
     build: .
-    command: bash -c "python manage.py migrate & python manage.py runserver"
+    command: bash -c "python manage.py migrate & python manage.py runserver 0.0.0.0:8000"
     env_file: ./.env
     ports:
       - ${PORT}:8000

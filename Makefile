@@ -1,11 +1,19 @@
-run:
-	python manage.py runserver
+run: build up
 
 makemig:
 	python manage.py makemigrations
 
 migrate:
-	python manage.py migrate
+	docker exec stripe_app python manage.py migrate
+
+up:
+	docker-compose up
+
+down:
+	docker-compose down
+
+build:
+	docker-compose build
 
 superuser:
-	python manage.py createsuperuser
+	docker exec -it stripe_app python manage.py createsuperuser
