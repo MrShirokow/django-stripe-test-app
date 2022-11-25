@@ -87,7 +87,8 @@ class CheckoutSessionCreatingView(View):
                         },
                     },
                     'quantity': order_item['quantity'],
-                } for order_item in order.order_items.values(
+                } 
+                for order_item in order.order_items.values(
                     'quantity', 
                     'item__price', 
                     'item__name',
@@ -104,6 +105,9 @@ class CheckoutSessionCreatingView(View):
 
 
 def create_order(request) -> HttpResponse:
+    '''
+    View for create order and order items. After creating, redirect to order page 
+    '''
     items = request.POST.getlist('item')
     quantities = request.POST.getlist('quantity')
     if not items:

@@ -26,7 +26,7 @@
                         {% for item in items %}
                         <tr class="align-middle alert border-bottom">
                             <td>
-                                <input type="checkbox" id="check" name="item" value="{{ item.id }}">
+                                <input type="checkbox" id="check" name="item" value="{{ item.id }}" onclick={handleCheckboxChange(this)}>
                             </td>
                             <td>
                                 <p class="m-0 fw-bold">{{ item.name }}</p>
@@ -40,7 +40,7 @@
                                 <div class="fw-600">${{ item.display_price }}</div>
                             </td>
                             <td>
-                                <input class="input" min="1" value=1 type="number" name="quantity">
+                                <input class="input" name="quantity" id="qnt" min="0" value=0 type="number" disabled>
                             </td>
                         </tr>
                         {% endfor %}
@@ -53,5 +53,21 @@
         </div>
     </div>
 </body>
+
+<script>
+    function handleCheckboxChange(checkbox) {
+        checkbox.addEventListener('change', function(event) {
+            var quantity = event.currentTarget.parentElement.parentElement.querySelector('.input');
+            if (event.currentTarget.checked) {
+                quantity.disabled = false;
+                quantity.value = 1;
+            }
+            else {
+                quantity.disabled = true;
+                quantity.value = 0;
+            }
+        });
+    }
+</script>
 
 </html>
