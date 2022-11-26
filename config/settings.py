@@ -37,7 +37,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG', default=False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 DOMAIN = env('DOMAIN')
 
 # Application definition
@@ -136,8 +136,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'stripe_payment/static_files')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'stripe_payment/static'),
+]
 MEDIA_ULR = '/media/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'stripe_payment/static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'stripe_payment/media')
 
 # Default primary key field type

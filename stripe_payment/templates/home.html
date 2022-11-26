@@ -61,10 +61,12 @@
             if (event.currentTarget.checked) {
                 quantity.disabled = false;
                 quantity.value = 1;
+                quantity.min = 1;
             }
             else {
                 quantity.disabled = true;
                 quantity.value = 0;
+                quantity.min = 0;
             }
         });
     }
