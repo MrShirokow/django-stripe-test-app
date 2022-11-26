@@ -89,7 +89,7 @@ class CheckoutSessionCreatingView(View):
     View to create a session for order payment
     '''
     def post(self, request, *args, **kwargs) -> JsonResponse:
-        order_id = self.kwargs['pk']
+        order_id = self.kwargs.get('pk')
         order = get_object_or_404(Order, pk=order_id)
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],

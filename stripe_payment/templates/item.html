@@ -25,7 +25,7 @@
                     <tbody>
                         <tr class="align-middle alert border-bottom">
                             <td>
-                                <input type="checkbox" id="check" name="item" value="{{ item.id }}" onclick={handleCheckboxChange(this)}>
+                                <input type="checkbox" id="check" name="item" value="{{ item.id }}" onclick={handleCheckboxChange(this)} checked>
                             </td>
                             <td>
                                 <p class="m-0 fw-bold">{{ item.name }}</p>
@@ -39,7 +39,7 @@
                                 <div class="fw-600">${{ item.display_price }}</div>
                             </td>
                             <td>
-                                <input class="input" name="quantity" id="qnt" min="0" value=0 type="number" disabled>
+                                <input class="input" name="quantity" id="qnt" min="1" value=1 type="number">
                             </td>
                         </tr>
                     </tbody>
