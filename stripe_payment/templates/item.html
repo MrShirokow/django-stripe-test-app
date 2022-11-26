@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>Home</title>
+    <title>Item</title>
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
@@ -23,13 +23,12 @@
                         <th>Quantity</th>
                     </thead>
                     <tbody>
-                        {% for item in items %}
                         <tr class="align-middle alert border-bottom">
                             <td>
                                 <input type="checkbox" id="check" name="item" value="{{ item.id }}" onclick={handleCheckboxChange(this)}>
                             </td>
                             <td>
-                                <a class="m-0 fw-bold" href="{% url 'item-page' item.id %}">{{ item.name }}</a>
+                                <p class="m-0 fw-bold">{{ item.name }}</p>
                             </td>
                             <td>
                                 <div>
@@ -43,7 +42,6 @@
                                 <input class="input" name="quantity" id="qnt" min="0" value=0 type="number" disabled>
                             </td>
                         </tr>
-                        {% endfor %}
                     </tbody>
                 </table>
                 <div class="submitButton">

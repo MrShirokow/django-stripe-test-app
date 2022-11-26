@@ -41,7 +41,7 @@ class OrderPageView(TemplateView):
     template_name = 'order.html'
 
     def get_context_data(self, **kwargs) -> dict:
-        order_id = self.kwargs['pk']
+        order_id = self.kwargs.get('pk')
         order = get_object_or_404(Order, pk=order_id)
         context = super(OrderPageView, self).get_context_data(**kwargs)
         context.update({
@@ -64,6 +64,22 @@ class HomePageView(TemplateView):
         context = super(HomePageView, self).get_context_data(**kwargs)
         context.update({
             'items': items,
+        })
+        return context
+
+
+class ItemPageView(TemplateView):
+    '''
+    View for item page
+    '''
+    template_name = 'item.html'
+
+    def get_context_data(self, **kwargs) -> dict:
+        item_id = self.kwargs.get('pk')
+        item = get_object_or_404(Item, pk=item_id)
+        context = super(ItemPageView, self).get_context_data(**kwargs)
+        context.update({
+            'item': item,
         })
         return context
 
