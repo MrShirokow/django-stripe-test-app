@@ -1,8 +1,8 @@
 ## Stripe
 
-Приложение представляет собой возможность выбирать товары и оплачивать их 
+Приложение представляет собой сервер с возможностью выбирать товары и оплачивать их 
 с помощью платёжной системы [Stripe](https://stripe.com/docs/checkout/quickstart).
-Посмотреть визуализацию можно по url-адресу: http://89.223.127.50:8000/
+Посмотреть рабочий пример можно [здесь](http://89.223.127.50:8000/).
 
 Перед запуском, нужно **установить** 
 [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) и 
@@ -42,8 +42,8 @@ SECRET_KEY=django_secret_key_0123456789
 DOMAIN=http://127.0.0.1:8000
 
 # публичный и приватный ключи для stripe
-STRIPE_PUBLIC_KEY=pk_test_51Lk2VTJliERtwLfcjVWNZIY4iJe8qVzimrefTAU0JqZAsH2bt9GYMi8ad3lrBHmbHmfRTz7OI59s0sxT0GL4eaW300N5CpR8R0
-STRIPE_SECRET_KEY=sk_test_51Lk2VTJliERtwLfcDt6tsuyk5W8ys8m7ANZrgqZJBMiyffEP0QHuVaS8utcGtII38DHos5atXEI319Gtiy9RgKMo00gjhEJFia
+STRIPE_PUBLIC_KEY=pk_test_0123456789
+STRIPE_SECRET_KEY=sk_test_0123456789
 ```
 
 ### Запуск приложения 
