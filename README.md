@@ -15,7 +15,7 @@ This application was written in order to learn integration with the [Stripe](htt
 pip install -r requirements.txt
 ```
 
-[make](https://www.gnu.org/software/make/):
+## Run app:
 
 ```bash
 make migrate
